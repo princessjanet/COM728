@@ -81,9 +81,9 @@ def display_missing_data():
     file_path = "catalogue.db"
     db = sqlite3.connect(file_path)
     cursor = db.cursor()
-    sql = "SELECT product.name, supplier.name FROM product  LEFT OUTER JOIN supplier ON product.supplier_id= " \
-          "supplier.id UNION product.name, supplier.name FROM supplier LEFT OUTER JOIN product ON supplier.id= " \
-          "product.supplier_id"
+    sql = "SELECT product.name, supplier.name FROM product LEFT OUTER JOIN supplier ON " \
+          "supplier.id=product.supplier_id UNION SELECT product.name, supplier.name FROM supplier LEFT OUTER JOIN " \
+          "product ON product.supplier_id=supplier.id "
     cursor.execute(sql)
     records = cursor.fetchall()
     for record in records:
