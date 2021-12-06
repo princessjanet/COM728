@@ -18,8 +18,13 @@ def welcome():
 
     :return: Does not return anything.
     """
-    # TODO: Your code here
-    pass
+
+    def welcome():
+        print(f"\n-----------------------"
+              "\nCOVID-19 (January) Data"
+              "\n-----------------------")
+
+    welcome()
 
 
 
