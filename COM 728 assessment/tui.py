@@ -19,12 +19,11 @@ def welcome():
     :return: Does not return anything.
     """
 
-    def welcome():
-        print(f"\n-----------------------"
+    print(f"\n-----------------------"
               "\nCOVID-19 (January) Data"
               "\n-----------------------")
 
-    welcome()
+welcome()
 
 
 
@@ -39,8 +38,11 @@ def error(msg):
     :param msg: A string containing an error message
     :return: Does not return anything
     """
-    # TODO: Your code here
-    pass
+
+
+    print("'Error!'" + msg)
+
+error("error_msg")
 
 
 def progress(operation, value):
