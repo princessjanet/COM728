@@ -166,8 +166,12 @@ def serial_number():
 
     :return: the serial number for a record
     """
-    # TODO: Your code here
-    pass
+
+    def serial_number():
+        serial_number = int(input("please enter a serial_number for a record:"))
+        return serial_number
+
+    serial_number()
 
 
 def observation_dates():
