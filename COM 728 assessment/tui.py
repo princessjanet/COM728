@@ -63,8 +63,17 @@ def progress(operation, value):
     :param value: An integer indicating the amount of progress made
     :return: Does not return anything
     """
-    # TODO: Your code here
-    pass
+    print(f"{operation}")
+
+    if value == 0:
+        print("has started")
+    if value > 0 < 100:
+        print(f"is in progress ({value}%) completed")
+    if value == 100:
+        print("has completed")
+
+
+progress("data loading", 0)
 
 
 def menu(variant=0):
