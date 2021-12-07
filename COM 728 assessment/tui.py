@@ -185,8 +185,12 @@ def observation_dates():
 
     :return: a list of observation dates
     """
-    # TODO: Your code here
-    pass
+
+    def observation_dates():
+        observation_dates = input("please enter some observation dates:")
+        return observation_dates
+
+observation_dates()
 
 
 def display_record(record, cols=None):
