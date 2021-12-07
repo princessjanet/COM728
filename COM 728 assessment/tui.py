@@ -218,11 +218,19 @@ def display_record(record, cols=None):
     :param cols: A list of integer values that represent column indexes
     :return: Does not return anything
     """
-    # TODO: Your code here
-    pass
+records = []
+        if cols:
+            for i in cols:
+                records.append(record[i])
+        else:
+            records = record
+        print(records)
+
+display_record([1, '01/22/2020', 'Anhui', 'Mainland China', '1/22/2020 17:00', 1, 0, 0], cols=[1, 3])
 
 
-def display_records():
+
+def display_records(records, cols=None):
     """
     Task 9: Display each record in the specified list of records.
     Only the data for the specified column indexes will be displayed.
@@ -247,4 +255,18 @@ def display_records():
     :param cols: A list of integer values that represent column indexes
     :return: Does not return anything
     """
-    # TODO: Your code here
+data = []
+    for i in range(len(records)):
+        if cols:
+            for j in cols:
+                data.append(records[i][j])
+            print (data)
+            data = []
+
+        else:
+            print(records[i])
+
+
+B = [[1, '01/22/2020', 'Anhui', 'Mainland China', '1/22/2020 17:00', 1, 0, 0],
+     [3, '01/22/2024', 'Eniola', 'Mainland Lagos', '10/22/2020 17:00', 5, 0, 3]]
+display_records(B, cols=[1, 3])
