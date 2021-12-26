@@ -151,7 +151,7 @@ def total_records(num_records):
       :return: Does not return anything
     """
     print(f"There are {num_records} records in the data set.")
-    num_records = int(input())
+
 
 
 total_records(100)
@@ -167,11 +167,11 @@ def serial_number():
     :return: the serial number for a record
     """
 
-    def serial_number():
-        serial_number = int(input("please enter a serial_number for a record:"))
-        return serial_number
 
-    serial_number()
+    serial_number = int(input("please enter a serial_number for a record:"))
+    return serial_number
+
+serial_number()
 
 
 def observation_dates():
@@ -186,9 +186,8 @@ def observation_dates():
     :return: a list of observation dates
     """
 
-    def observation_dates():
-        observation_dates = input("please enter some observation dates:")
-        return observation_dates
+    observation_dates = input("please enter some observation dates:")
+    return observation_dates
 
 observation_dates()
 
@@ -218,13 +217,13 @@ def display_record(record, cols=None):
     :param cols: A list of integer values that represent column indexes
     :return: Does not return anything
     """
-records = []
-        if cols:
-            for i in cols:
-                records.append(record[i])
-        else:
-            records = record
-        print(records)
+    records = []
+    if cols:
+        for i in cols:
+            records.append(record[i])
+    else:
+        records = record
+    print(records)
 
 display_record([1, '01/22/2020', 'Anhui', 'Mainland China', '1/22/2020 17:00', 1, 0, 0], cols=[1, 3])
 
@@ -255,7 +254,7 @@ def display_records(records, cols=None):
     :param cols: A list of integer values that represent column indexes
     :return: Does not return anything
     """
-data = []
+    data = []
     for i in range(len(records)):
         if cols:
             for j in cols:
@@ -269,4 +268,4 @@ data = []
 
 B = [[1, '01/22/2020', 'Anhui', 'Mainland China', '1/22/2020 17:00', 1, 0, 0],
      [3, '01/22/2024', 'Eniola', 'Mainland Lagos', '10/22/2020 17:00', 5, 0, 3]]
-display_records(B, cols=[1, 3])
+display_records(B, cols=[1, 4,5])

@@ -104,3 +104,28 @@ def display_records(records, cols=None):
         [3, '01/22/2024', 'Eniola', 'Mainland Lagos', '10/22/2020 17:00', 5, 0, 3]
         ]
 display_records(A, cols = [2.4]
+
+
+if selected_option == 1:
+tui.progress("data processing operation",0)
+tui.menu(1)
+tui.progress("data processing operation",100)
+if selected_option == 1
+tui.progress("record retrieval process",0)
+
+tui.progress("record retrieval process",100)
+if selected_option == 2
+tui.progress("records retrieval process",0)
+
+tui.display_records(record,cols)
+tui.progress("records retrieval process",100)
+if selected_option == 3
+tui.progress("grouping process",0)
+
+tui.display_records(record,cols)
+tui.progress("grouping process",100)
+if selected_option == 4
+tui.progress("summary process",0)
+
+tui.display_records(record,cols)
+tui.progress("summary process",100)

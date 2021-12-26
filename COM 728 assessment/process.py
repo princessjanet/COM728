@@ -26,3 +26,25 @@ The required functions are as follows:
 """
 
 # TODO: Your code here
+
+import tui
+
+def retrieve_total_number_of_records():
+    records = []
+    num_records = len(records)
+retrieve_total_number_of_records()
+
+def retrieve_records_by_serial_number():
+    records = []
+    tui.serial_number()
+    print(records{tui.serial_number})
+retrieve_records_by_serial_number()
+
+def retrieve_records_by_observation_date():
+    records = []
+    tui.observation_dates()
+    observation_dates = input("Please enter observation dates")
+    print(records[observation_dates])
+
+
+

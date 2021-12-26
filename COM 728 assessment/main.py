@@ -13,9 +13,10 @@ Note:   any user input/output should be done using the appropriate functions in 
 # Task 10: Import required modules
 # TODO: Your code here
 import tui
+import csv
 import process
 import database
-
+import visual
 
 # Task 11: Create an empty list named 'covid_records'.
 # This will be used to store the data read from the source data file.
@@ -27,7 +28,7 @@ def run():
     # Task 12: Call the function welcome of the module 'tui'.
     # This will display our welcome message when the program is executed.
     # TODO: Your code here
-tui.welcome()
+    tui.welcome()
     # Task 13: Load the data.
     # - Use the appropriate function in the module 'tui' to display a message to indicate that the data loading
     # operation has started.
@@ -36,9 +37,10 @@ tui.welcome()
     # - Use the appropriate functions in the module 'tui' to display a message to indicate how many records have
     # been loaded and that the data loading operation has completed.
     # TODO: Your code here
-tui.progress("data loading",0)
+    tui.progress("data loading",0)
+    file_path = "covid_19_data.csv"
+    covid_records = []
 file_path = "covid_19_data.csv"
-covid_records = []
 try:
     with open(file_path) as csv_file:
         csv_reader = csv.reader(csv_file)
@@ -47,16 +49,20 @@ try:
         for line in csv_reader:
             covid_records.append(line)
 except IOError:
-print("cannot load file")
-tui.total_records()
-tui.progress("data loading opearation",100)
-    while True:
+    print("cannot load file")
+tui.total_records(100)
+tui.progress("Data loading operation",100)
+while True:
         # Task 14: Using the appropriate function in the module 'tui', display a menu of options
         # for the different operations that can be performed on the data (menu variant 0).
         # Assign the selected option to a suitable local variable
         # TODO: Your code here
     tui.menu()
-    selected_option = 0
+    a = 1
+    b = 2
+    c = 3
+    d = 4
+
 
 
         # Task 15: Check if the user selected the option for processing data.  If so, then do the following:
@@ -103,7 +109,29 @@ tui.progress("data loading opearation",100)
         #       - Use the appropriate function in the module 'tui' to indicate that the summary
         #       process has completed.
         # TODO: Your code here
+    if selected_option == 1:
+        tui.progress("data processing operation",0)
+        tui.menu(1)
+        tui.progress("data processing operation",100)
+    if selected_option == 1:
+        tui.progress("record retrieval process",0)
 
+        tui.progress("record retrieval process",100)
+    if selected_option == 2:
+        tui.progress("records retrieval process",0)
+
+        tui.display_records(record,cols)
+        tui.progress("records retrieval process",100)
+    if selected_option == 3:
+        tui.progress("grouping process",0)
+
+        tui.display_records(record,cols)
+        tui.progress("grouping process",100)
+    if selected_option == 4:
+        tui.progress("summary process",0)
+
+        tui.display_records(record,cols)
+        tui.progress("summary process",100)
         # Task 21: Check if the user selected the option for setting up or querying the database.
         # If so, then do the following:
         # - Use the appropriate function in the module 'tui' to display a message to indicate that the
@@ -135,7 +163,7 @@ tui.progress("data loading opearation",100)
         # module tui to display an error message
         # TODO: Your code here
 
-        pass  # can remove
+    pass  # can remove
 
 
 if __name__ == "__main__":
