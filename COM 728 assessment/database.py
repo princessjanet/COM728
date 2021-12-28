@@ -29,3 +29,11 @@ required from the user to complete the querying.
 """
 
 # TODO: Your code here
+import sqlite3
+
+def database_setup(covid_19_data):
+    db = sqlite3.connect('covid.db')
+    cursor = db.cursor()
+    sql = """CREATE TABLE "cases"("SNo" INTEGER,   "Confirmed" INTEGER,"Deaths" INTEGER,"Recovered" INTEGER, "id" INTEGER NOT NULL, "countries_id" INTEGER, PRIMARY KEY("id"))"""
+    cursor.executescript(sql)
+    db.commit()
