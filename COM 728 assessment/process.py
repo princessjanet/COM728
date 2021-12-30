@@ -37,7 +37,7 @@ retrieve_total_number_of_records()
 def retrieve_records_by_serial_number():
     records = []
     tui.serial_number()
-    print(records{tui.serial_number})
+    print(records[tui.serial_number])
 retrieve_records_by_serial_number()
 
 def retrieve_records_by_observation_date():
