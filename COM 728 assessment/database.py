@@ -30,12 +30,23 @@ required from the user to complete the querying.
 
 # TODO: Your code here
 import sqlite3
-
-def database_setup(covid_19_data):
+import tui
+def database_setup(records):
     db = sqlite3.connect('covid.db')
     cursor = db.cursor()
-    sql = """CREATE TABLE "cases"("SNo" INTEGER,   "Confirmed" INTEGER,"Deaths" INTEGER,"Recovered" INTEGER, "id" INTEGER NOT NULL, "countries_id" INTEGER, PRIMARY KEY("id"))"""
-    cursor.executescript(sql)
-    db.commit()
+    try:
+        sql = """CREATE TABLE "covid_19_dat"("SNo" INTEGER,"Country" TEXT,"Observation_date" TEXT, "Confirmed" INTEGER,"Deaths" INTEGER,"Recovered" INTEGER)"""
+        cursor.executescript(sql,val)
+        db.commit()
+    except IOError:
+        tui.error('cannot create table')
 
 def retrieve_country_name_alphabetically():
+
+
+
+
+
+
+    if __name__ == '__main__':
+        setup([[2, 'dd', 'dd', 'dd', 'dd', 2, 2, 2]])
