@@ -37,21 +37,22 @@ def run():
     # - Use the appropriate functions in the module 'tui' to display a message to indicate how many records have
     # been loaded and that the data loading operation has completed.
     # TODO: Your code here
+    tui.welcome()
     tui.progress("data loading",0)
     file_path = "covid_19_data.csv"
     covid_records = []
-file_path = "covid_19_data.csv"
-try:
-    with open(file_path) as csv_file:
-        csv_reader = csv.reader(csv_file)
-        headings = next(csv_reader)
+    file_path = "covid_19_data.csv"
+    try:
+        with open(file_path) as csv_file:
+            csv_reader = csv.reader(csv_file)
+            headings = next(csv_reader)
 
         for line in csv_reader:
             covid_records.append(line)
-except IOError:
-    print("cannot load file")
-tui.total_records(100)
-tui.progress("Data loading operation",100)
+    except IOError:
+        tui.error("cannot load file")
+    tui.progress("Data loading operation",100)
+    tui.total_records(process.retrieve_total_number_of_records(covid_records))
 while True:
         # Task 14: Using the appropriate function in the module 'tui', display a menu of options
         # for the different operations that can be performed on the data (menu variant 0).
