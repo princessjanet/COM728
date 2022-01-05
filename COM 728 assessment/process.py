@@ -60,7 +60,7 @@ def retrieve_records_by_observation_date(records,dates):
 
 def retrieve_record_groupby_country(records):
     region = input("what is your country/region?")
-    temp = ("country": region, "confirmed cases":0,"death": 0, "recovered":0)
+    temp = {"country": region, "confirmed cases":0,"death": 0, "recovered":0}
     for record in records:
         confirmed = records[5]
         death = record[6]

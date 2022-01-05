@@ -37,34 +37,24 @@ def run():
     # - Use the appropriate functions in the module 'tui' to display a message to indicate how many records have
     # been loaded and that the data loading operation has completed.
     # TODO: Your code here
-    tui.welcome()
-    tui.progress("data loading",0)
     file_path = "covid_19_data.csv"
-    covid_records = []
-    file_path = "covid_19_data.csv"
+    tui.progress("data loading", 0)
     try:
         with open(file_path) as csv_file:
             csv_reader = csv.reader(csv_file)
             headings = next(csv_reader)
-
-        for line in csv_reader:
-            covid_records.append(line)
+            for line in csv_reader:
+                covid_records.append(line)
     except IOError:
         tui.error("cannot load file")
     tui.progress("Data loading operation",100)
     tui.total_records(process.retrieve_total_number_of_records(covid_records))
-while True:
+    while True:
         # Task 14: Using the appropriate function in the module 'tui', display a menu of options
         # for the different operations that can be performed on the data (menu variant 0).
         # Assign the selected option to a suitable local variable
         # TODO: Your code here
-    tui.menu()
-    a = 1
-    b = 2
-    c = 3
-    d = 4
-
-
+        selected_option = tui.menu(variant=0)
 
         # Task 15: Check if the user selected the option for processing data.  If so, then do the following:
         # - Use the appropriate function in the module tui to display a message to indicate that the data processing
@@ -110,29 +100,15 @@ while True:
         #       - Use the appropriate function in the module 'tui' to indicate that the summary
         #       process has completed.
         # TODO: Your code here
-    if selected_option == 1:
-        tui.progress("data processing operation",0)
-        tui.menu(1)
-        tui.progress("data processing operation",100)
-    if selected_option == 1:
-        tui.progress("record retrieval process",0)
+        if selected_option == 1:
+            selected_option1 = tui.menu(variant=1)
+            if selected_option1 == 1:
+                tui.progress("record retrieval process",0)
+                serial = tui.serial_number()
+                record = process.retrieve_records_by_serial_number(covid_records,serial)
+                tui.display_record(record)
+                tui.progress("record retrieval process",100)
 
-        tui.progress("record retrieval process",100)
-    if selected_option == 2:
-        tui.progress("records retrieval process",0)
-
-        tui.display_records(record,cols)
-        tui.progress("records retrieval process",100)
-    if selected_option == 3:
-        tui.progress("grouping process",0)
-
-        tui.display_records(record,cols)
-        tui.progress("grouping process",100)
-    if selected_option == 4:
-        tui.progress("summary process",0)
-
-        tui.display_records(record,cols)
-        tui.progress("summary process",100)
         # Task 21: Check if the user selected the option for setting up or querying the database.
         # If so, then do the following:
         # - Use the appropriate function in the module 'tui' to display a message to indicate that the
@@ -164,7 +140,7 @@ while True:
         # module tui to display an error message
         # TODO: Your code here
 
-    pass  # can remove
+
 
 
 if __name__ == "__main__":

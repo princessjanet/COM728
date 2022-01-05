@@ -63,14 +63,14 @@ def progress(operation, value):
     :param value: An integer indicating the amount of progress made
     :return: Does not return anything
     """
-    print(f"{operation}")
+    print(f"{operation}", end ='')
 
     if value == 0:
-        print("has started")
-    if value > 0 < 100:
-        print(f"is in progress ({value}%) completed")
-    if value == 100:
-        print("has completed")
+        print(" has started")
+    elif value > 0 < 100:
+        print(f" is in progress ({value}%) completed")
+    else:
+        print(" has completed")
 
 
 
