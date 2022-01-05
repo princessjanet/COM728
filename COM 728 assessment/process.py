@@ -29,16 +29,20 @@ The required functions are as follows:
 
 import tui
 
-def retrieve_total_number_of_records():
-    records = []
-    num_records = len(records)
-retrieve_total_number_of_records()
+def retrieve_total_number_of_records(loaded):
+   return len (loaded)
 
-def retrieve_records_by_serial_number():
-    records = []
-    tui.serial_number()
-    print(records[tui.serial_number])
-retrieve_records_by_serial_number()
+def retrieve_records_by_serial_number(records,serial):
+    """
+        :records: A list of records
+        :serial: An interger refference to a record
+        :return: list of a certain record for the ser
+        """
+
+    for record in records:
+        if record[0] == serial:
+            return record
+    return []
 
 def retrieve_records_by_observation_date():
     records = []

@@ -12,7 +12,7 @@ Retrieve information for the top 5 countries for confirmed cases
 Retrieve information for the top 5 countries for death for specific observation dates
 
 
-The function for setting up the database should do the following:
+The should do the following:
 - Take a list of records as a parameter
 - Use the list passed as a parameter value to create and populate a suitable database. You are required to design a
 suitable (small) database.
