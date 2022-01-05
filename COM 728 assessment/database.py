@@ -32,10 +32,14 @@ required from the user to complete the querying.
 import sqlite3
 import tui
 def database_setup(records):
+    cursor = db.execute("SELECT name FROM sqlite_master WHERE type='table'" )
+    table =[x[0] for x in cursor.fetchall() if v[0] != "sqlite_sequence"]
+
     db = sqlite3.connect('covid.db')
     cursor = db.cursor()
+    val = [tuple (y) for y in records]
     try:
-        sql = """CREATE TABLE "covid_19_dat"("SNo" INTEGER,"Country" TEXT,"Observation_date" TEXT, "Confirmed" INTEGER,"Deaths" INTEGER,"Recovered" INTEGER)"""
+        sql = """CREATE TABLE "covid_19_data"("SNo" INTEGER,"Country" TEXT,"Observation_date" TEXT, "Confirmed" INTEGER,"Deaths" INTEGER,"Recovered" INTEGER)"""
         cursor.executescript(sql,val)
         db.commit()
     except IOError:
