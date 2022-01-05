@@ -36,7 +36,7 @@ def retrieve_records_by_serial_number(records,serial):
     """
         :records: A list of records
         :serial: An interger refference to a record
-        :return: list of a certain record for the ser
+        :return: list of a certain record for the serial number
         """
 
     for record in records:
@@ -44,11 +44,19 @@ def retrieve_records_by_serial_number(records,serial):
             return record
     return []
 
-def retrieve_records_by_observation_date():
-    records = []
-    tui.observation_dates()
-    observation_dates = input("Please enter observation dates")
-    print(records[observation_dates])
+def retrieve_records_by_observation_date(records,dates):
+    """
+        :records: A list of records
+        :dates: A list of observation dates
+        :return: list of a certain record for the serial number if it exist else None
+        """
+    exist = []
+    for date in dates:
+        for record in records:
+            if date in record[1]:
+                exist.append(record)
+    return exist
+
 
 
 
