@@ -185,10 +185,15 @@ def observation_dates():
 
     :return: a list of observation dates
     """
-
-    observation_dates = input("please enter some observation dates:")
-    return observation_dates
-
+    try:
+        date =[]
+        observation_dates = int(input("please enter some observation dates:"))
+        for j in range(observation_dates):
+            o =input(f"Date{j+1} format(mm/dd/yy)")
+            date.append(o)
+        return date
+    except IOError:
+        return[]
 
 
 
