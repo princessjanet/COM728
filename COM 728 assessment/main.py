@@ -138,7 +138,7 @@ def run():
         # - Use the appropriate function in the module 'tui' to display a message to indicate that the
         # database querying operation has completed.
         # TODO: Your code here
-    elif selected_option == 2
+    elif selected_option == 2:
         selected_option1 = tui.menu(variant=2)
         if selected_option1 == 1:
             tui.progress('database querying operation',0)

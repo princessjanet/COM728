@@ -29,6 +29,7 @@ required from the user to complete the querying.
 """
 
 # TODO: Your code here
+from dns.resolver import query
 import sqlite3
 import tui
 

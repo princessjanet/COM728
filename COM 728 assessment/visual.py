@@ -46,4 +46,16 @@ def pie_chart():
     plt.show()
 
 
+def bar_chart():
+    records= database
+    date = records[0][1]
+    lbs = [r[3] for r in records]
+    data= [int(r[6]) for r in records]
+    fig = plt.figure(figsize=(10,5))
+    plt.bar(lbs,data,color = 'purple',
+            width = 0.4)
+    plt.xlabel("countries")
+    plt.ylabel("No of death")
+    plt.title(f"Top 5 Countries with Deaths\nWith in {date}")
+    plt.show()
 
