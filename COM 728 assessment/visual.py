@@ -21,5 +21,29 @@ import numpy as np
 def func(pct,allvalues):
     absolute = int(pct/100.*np.sum(allvalues))
     return"{:.1f}%\n({:d})".format(pct,absolute)
+def pie_chart():
+    records=database.
+    lbs =[r[3] for r in records]
+    data = [int(r[5]) for r in records]
+    explode = (0.1,0.2,0.3,0.4,0.5)
+    colors = ("orange", "cyan", "blue",
+          "grey", "black")
+    fig,ax = plt.subplots(figsize=(10,7))
+    wedges,texts,autotexts =ax.pie(data,
+                                    autopct = lambda pct: func(pct, data),
+                                    explode = explode,
+                                    labels = lbs,
+                                    shadow = True,
+                                    colors = colors,
+                                    startangle = 90,
+                                    textprops = dict(color ="magenta"))
+    ax.legend(wedges,lbs,
+              title="countries",
+              loc="center left",
+              bbox_to_anchor= (1,0,0.5,1))
+    plt.setp(autotexts,size =8, weight ="bold")
+    ax.set_title("Top 5 Countries of confirmed cases")
+    plt.show()
+
 
 
