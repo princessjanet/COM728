@@ -50,10 +50,19 @@ def database_setup(records):
         tui.error('cannot create table')
 
 def retrieve_country_name_alphabetically():
+    countries = []
+    conn = sqlite3.connect('covid19.db')
+    try:
+        query = "SELECT Distinct Country FROM covid_19_data"
+        cursor = conn.execute(query)
+        result = cursor.fetchall()
+        country = [x[0] for x in result]
+    except IOError:
+        tui.error('error retrieving country name')
+    conn.close()
+    return sorted(countries)
 
-
-
-
+def retrieve_
 
 
     if __name__ == '__main__':

@@ -231,8 +231,6 @@ def display_record(record, cols=None):
 
 
 
-
-
 def display_records(records, cols=None):
     """
     Task 9: Display each record in the specified list of records.
