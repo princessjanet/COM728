@@ -121,7 +121,7 @@ def run():
                 tui.progress("grouping process", 100)
             elif selected_option1 == 4
                 tui.progress("summary process", 0)
-                record = process.re(covid_records)
+                record = process.retrieve_summary(covid_records)
                 tui.display_record(record)
                 tui.progress("summary process", 100)
 
@@ -138,6 +138,17 @@ def run():
         # - Use the appropriate function in the module 'tui' to display a message to indicate that the
         # database querying operation has completed.
         # TODO: Your code here
+    elif selected_option == 2
+        selected_option1 = tui.menu(variant=2)
+        if selected_option1 == 1:
+            tui.progress('database querying operation',0)
+            database.database_setup(covid_records)
+            tui.progress('database querying operation',100)
+        elif selected_option1 == 2:
+            tui.progress('database querying operation',0)
+            database.retrieve_country_name_alphabetically(covid_records)
+            tui.progress('database querying operation',100)
+
 
         # Task 27: Check if the user selected the option for visualising data.
         # If so, then do the following:
