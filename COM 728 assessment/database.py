@@ -42,7 +42,7 @@ def database_setup(records):
     print(dir(db))
     val = [tuple (y) for y in records]
     try:
-        sql = """CREATE TABLE "covid_19_data"("SNo" INTEGER,"Country" TEXT,"Observation_date" TEXT, "Confirmed" INTEGER,"Deaths" INTEGER,"Recovered" INTEGER)"""
+        sql = "INSERT INTO covid_19_data (Sno,ObservationDate,Province,Country,LastUpdate,Confirmed,Deaths,Recovered) VALUES (?,?,?,?,?,?,?,?);"
         db.executemany(sql,val)
         db.commit()
     except IOError:

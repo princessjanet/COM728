@@ -16,3 +16,10 @@ the data using Matplotlib.
 """
 
 # TODO: Your code here
+import numpy as np
+
+def func(pct,allvalues):
+    absolute = int(pct/100.*np.sum(allvalues))
+    return"{:.1f}%\n({:d})".format(pct,absolute)
+
+
