@@ -16,7 +16,7 @@ import tui
 import csv
 import process
 import database
-import visual
+
 
 # Task 11: Create an empty list named 'covid_records'.
 # This will be used to store the data read from the source data file.
@@ -108,18 +108,18 @@ def run():
                 record = process.retrieve_records_by_serial_number(covid_records,serial)
                 tui.display_record(record)
                 tui.progress("record retrieval process",100)
-            elif selected_option1 == 2
+            elif selected_option1 == 2:
                 tui.progress("record retrieval process", 0)
                 date = tui.observation_dates()
                 record = process.retrieve_records_by_observation_date(covid_records, date)
                 tui.display_record(record)
                 tui.progress("record retrieval process", 100)
-            elif selected_option1 == 3
+            elif selected_option1 == 3:
                 tui.progress("grouping process", 0)
                 record = process.retrieve_record_groupby_country(covid_records)
                 tui.display_record(record)
                 tui.progress("grouping process", 100)
-            elif selected_option1 == 4
+            elif selected_option1 == 4:
                 tui.progress("summary process", 0)
                 record = process.retrieve_summary(covid_records)
                 tui.display_record(record)
@@ -138,16 +138,16 @@ def run():
         # - Use the appropriate function in the module 'tui' to display a message to indicate that the
         # database querying operation has completed.
         # TODO: Your code here
-    elif selected_option == 2:
-        selected_option1 = tui.menu(variant=2)
-        if selected_option1 == 1:
-            tui.progress('database querying operation',0)
-            database.database_setup(covid_records)
-            tui.progress('database querying operation',100)
-        elif selected_option1 == 2:
-            tui.progress('database querying operation',0)
-            database.retrieve_country_name_alphabetically(covid_records)
-            tui.progress('database querying operation',100)
+        elif selected_option == 2:
+            selected_option1 = tui.menu(variant=2)
+            if selected_option1 == 1:
+                tui.progress('database querying operation',0)
+                database.database_setup(covid_records)
+                tui.progress('database querying operation',100)
+            elif selected_option1 == 2:
+                tui.progress('database querying operation',0)
+                database.retrieve_country_name_alphabetically(covid_records)
+                tui.progress('database querying operation',100)
 
 
         # Task 27: Check if the user selected the option for visualising data.

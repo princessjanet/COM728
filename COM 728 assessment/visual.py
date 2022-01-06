@@ -59,3 +59,11 @@ def bar_chart():
     plt.title(f"Top 5 Countries with Deaths\nWith in {date}")
     plt.show()
 
+global x1,x2,x3,y1,y2,y3,t1,t2,t3,confirmed,yb,yc,ax1,ax2,ax3,dates
+def animate_confirmedcases(i):
+    global x1,y1confirmed,ax1,dates
+    try:
+        x1.append(dates[i])
+        y1.append(confirmed[i])
+    except:
+        pass

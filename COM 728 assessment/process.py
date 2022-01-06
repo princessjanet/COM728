@@ -84,10 +84,10 @@ def retrieve_summary(records):
         """
     temp = {}
     for record in records:
-    confirmed = record[5]
-    death = record[6]
-    recovered = record[7]
-        if record[3] not in list (temp.keys())
+        confirmed = record[5]
+        death = record[6]
+        recovered = record[7]
+        if record[3] not in list (temp.keys()):
             temp[record[3]]= {'country':record[3],'confirmed cases': confirmed,'deaths':death,'recovered':recovered }
         else:
             temp[record[3]]['confirmed cases']+= confirmed

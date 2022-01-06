@@ -32,7 +32,7 @@ required from the user to complete the querying.
 from dns.resolver import query
 import sqlite3
 import tui
-
+import process
 def create_table():
     cursor = db.execute("SELECT name FROM sqlite_master WHERE type='table';")
     table = [x[0] for x in cursor.fetchall() if v[0] != "sqlite_sequence"]
