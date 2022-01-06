@@ -59,6 +59,11 @@ def retrieve_records_by_observation_date(records,dates):
 
 
 def retrieve_record_groupby_country(records):
+    """
+        Group the data according to region/country
+        :records: A list of records
+        :return: list grouped according to the country
+        """
     region = input("what is your country/region?")
     temp = {"country": region, "confirmed cases":0,"death": 0, "recovered":0}
     for record in records:
@@ -70,6 +75,33 @@ def retrieve_record_groupby_country(records):
             temp["deaths"]+=death
             temp['recovered']+=Recovered
     return[temp]
+
+def retrieve_summary(records):
+    """
+        Group the data according to region/country
+        :records: A list of records
+        :return: list grouped according to the country
+        """
+    temp = {}
+    for record in records:
+    confirmed = record[5]
+    death = record[6]
+    recovered = record[7]
+        if record[3] not in list (temp.keys())
+            temp[record[3]]= {'country':record[3],'confirmed cases': confirmed,'deaths':death,'recovered':recovered }
+        else:
+            temp[record[3]]['confirmed cases']+= confirmed
+            temp[record[3]]['deaths']+= death
+            temp[record[3]]['recovered']+= recovered
+    result = []
+    keys = list(temp.keys())
+    for i in keys:
+        result.append(temp[k])
+    return result
+
+
+
+
 
 
 

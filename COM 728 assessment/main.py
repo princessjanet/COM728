@@ -108,6 +108,24 @@ def run():
                 record = process.retrieve_records_by_serial_number(covid_records,serial)
                 tui.display_record(record)
                 tui.progress("record retrieval process",100)
+            elif selected_option1 == 2
+                tui.progress("record retrieval process", 0)
+                date = tui.observation_dates()
+                record = process.retrieve_records_by_observation_date(covid_records, date)
+                tui.display_record(record)
+                tui.progress("record retrieval process", 100)
+            elif selected_option1 == 3
+                tui.progress("grouping process", 0)
+                record = process.retrieve_record_groupby_country(covid_records)
+                tui.display_record(record)
+                tui.progress("grouping process", 100)
+            elif selected_option1 == 4
+                tui.progress("summary process", 0)
+                record = process.re(covid_records)
+                tui.display_record(record)
+                tui.progress("summary process", 100)
+
+
 
         # Task 21: Check if the user selected the option for setting up or querying the database.
         # If so, then do the following:
