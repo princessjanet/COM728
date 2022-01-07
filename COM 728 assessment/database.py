@@ -51,18 +51,42 @@ def database_setup(records):
 
 def retrieve_country_name_alphabetically():
     countries = []
-    conn = sqlite3.connect('covid19.db')
+    db = sqlite3.connect('covid19.db')
     try:
         query = "SELECT Distinct Country FROM covid_19_data"
-        cursor = conn.execute(query)
+        cursor = db.execute(query)
         result = cursor.fetchall()
         country = [x[0] for x in result]
     except IOError:
         tui.error('error retrieving country name')
-    conn.close()
+    db.close()
     return sorted(countries)
 
-def retrieve_
+def retrieve_confrimedcases():
+    result =[]
+    db = sqlite3.connect('covid.db')
+    print('[1] By Observation Date\n[2] By Serial Number')
+    selected_option = input('Select 1 or 2: :' )
+    while selected_option not in ('1','2'):
+        selected_option = input('Select 1 or 2: :' )
+    if selected_option == '1':
+        date = tui.observation_dates()
+        date = str(tuple(date))[0:-2]+')' if str(tuple(date)).endswith(',)') else str(tuple(date))
+        query = 'SELECT * FROM covidstatus WHERE ObservationDate IN %s' % date
+    else:
+        serial = tui.serial_number()
+        query = 'SELECT * FROM covidstatus WHERE Sno = %s' %str(ser)
+    try:
+        cursor = db.execute(query)
+        result =cursor.fetchall()
+    except IOError:
+        tui.error('cannot query data')
+    db.close
+    return result
+
+
+
+
 
 
     if __name__ == '__main__':
