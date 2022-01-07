@@ -65,5 +65,15 @@ def animate_confirmedcases(i):
     try:
         x1.append(dates[i])
         y1.append(confirmed[i])
+        ax1.plot(x1, y1, scaley=True, scalex=True, color="green")
     except:
         pass
+def animate_death(i):
+    global x2,y2,ax2,dates,deaths
+    try:
+        x2.append(dates[i])
+        y2.append(deaths[i])
+        ax2.plot(x2, y2, scaley=True, scalex=True, color="red")
+    except:
+        pass
+def animate_recovery(i):

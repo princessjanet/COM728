@@ -96,7 +96,7 @@ def retrieve_top_confirmed():
     db.close()
     return result
 
-
+def retrieve_
 
 
 if __name__ == '__main__':
