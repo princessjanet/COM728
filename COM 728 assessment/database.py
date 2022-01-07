@@ -81,13 +81,23 @@ def retrieve_confrimedcases():
         result =cursor.fetchall()
     except IOError:
         tui.error('cannot query data')
-    db.close
+    db.close()
+    return result
+
+def retrieve_top_confirmed():
+    result = []
+    db = sqlite3.connect('covid.db')
+    query = 'SELECT  Sno,ObservationDate,Province,Country,LastUpdate,sum(Confirmed),Deaths,Recovered FROM covidstatus GROUP BY(Country) ORDER BY sum(Confirmed) DESC'
+    try:
+    cursor = db.execute(query)
+    result = cursor.fetchmany(size=5)
+    except IOError:
+        tui.error('cannot query data')
+    db.close()
     return result
 
 
 
 
-
-
-    if __name__ == '__main__':
-        setup([[2, 'dd', 'dd', 'dd', 'dd', 2, 2, 2]])
+if __name__ == '__main__':
+    setup([[2, 'dd', 'dd', 'dd', 'dd', 2, 2, 2]])
