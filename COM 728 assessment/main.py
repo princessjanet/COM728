@@ -16,7 +16,7 @@ import tui
 import csv
 import process
 import database
-
+import visual
 
 # Task 11: Create an empty list named 'covid_records'.
 # This will be used to store the data read from the source data file.
@@ -146,8 +146,25 @@ def run():
                 tui.progress('database querying operation',100)
             elif selected_option1 == 2:
                 tui.progress('database querying operation',0)
-                database.retrieve_country_name_alphabetically(covid_records)
+                country = database.retrieve_country_name_alphabetically()
+                tui.display_records(country)
                 tui.progress('database querying operation',100)
+            elif selected_option1 == 3:
+                tui.progress('database querying operation',0)
+                cases = database.retrieve_confrimedcases()
+                tui.display_records(cases)
+                tui.progress('database querying operation',100)
+            elif selected_option1 == 4:
+                tui.progress('database querying operation', 0)
+                top_confirmed = database.retrieve_top_confirmed()
+                tui.display_records(top_confirmed)
+                tui.progress('database querying operation', 100)
+            elif selected_option1 == 5:
+                tui.progress('database querying operation', 0)
+                top_death = database.retrieve_top_death()
+                tui.display_records(top_death)
+                tui.progress('database querying operation', 100)
+
 
 
         # Task 27: Check if the user selected the option for visualising data.
@@ -160,15 +177,30 @@ def run():
         # - Use the appropriate function in the module 'tui' to display a message to indicate that the
         # data visualisation operation has completed.
         # TODO: Your code here
-
+        elif selected_option == 3:
+            selected_option1 = tui.menu(variant=3)
+            if selected_option1 == 1:
+                tui.progress('data visualisation operation',0)
+                visual.pie_chart()
+                tui.progress('data visualisation operation',100)
+            elif selected_option1 == 2:
+                tui.progress('data visualisation operation', 0)
+                visual.bar_chart()
+                tui.progress('data visualisation operation', 100)
+            elif selected_option1 == 3:
+                tui.progress('data visualisation operation',0)
+                visual.animate()
+                tui.progress('data visualisation operation',100)
         # Task 31: Check if the user selected the option for exiting the program.
         # If so, then break out of the loop
         # TODO: Your code here
-
+        elif selected_option == 4:
+            break
         # Task 32: If the user selected an invalid option then use the appropriate function of the
         # module tui to display an error message
         # TODO: Your code here
-
+        else:
+            tui.error('Select between option 1 to 4')
 
 
 

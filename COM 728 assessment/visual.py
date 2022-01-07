@@ -16,13 +16,18 @@ the data using Matplotlib.
 """
 
 # TODO: Your code here
+from matplotlib import pyplot as plt
+from matplotlib.animation import FuncAnimation
+import matplotlib.pyplot as plt
 import numpy as np
+import database
+import random
 
 def func(pct,allvalues):
     absolute = int(pct/100.*np.sum(allvalues))
     return"{:.1f}%\n({:d})".format(pct,absolute)
 def pie_chart():
-    records=database.
+    records=database.retrieve_top_confirmed()
     lbs =[r[3] for r in records]
     data = [int(r[5]) for r in records]
     explode = (0.1,0.2,0.3,0.4,0.5)
@@ -77,3 +82,15 @@ def animate_death(i):
     except:
         pass
 def animate_recovery(i):
+    global x3, y3, ax3, dates, recovery
+    try:
+        x3.append(dates[i])
+        y3.append(recovery[i])
+        ax3.plot(x3, y3, scaley=True, scalex=True, color="blue")
+    except:
+        pass
+def animate():
+    global x1, x2, x3, y1, y2, y3, confirmed, yb, yc, ax1, ax2, ax3, dates, recovered, deaths
+    plt.style.use("seaborn")
+    region = input('what country/region?:')
+    date = database.re

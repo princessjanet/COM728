@@ -72,10 +72,10 @@ def retrieve_confrimedcases():
     if selected_option == '1':
         date = tui.observation_dates()
         date = str(tuple(date))[0:-2]+')' if str(tuple(date)).endswith(',)') else str(tuple(date))
-        query = 'SELECT * FROM covidstatus WHERE ObservationDate IN %s' % date
+        query = 'SELECT * FROM covid_19_data WHERE ObservationDate IN %s' % date
     else:
         serial = tui.serial_number()
-        query = 'SELECT * FROM covidstatus WHERE Sno = %s' %str(ser)
+        query = 'SELECT * FROM covid_19_data WHERE Sno = %s' %str(serial)
     try:
         cursor = db.execute(query)
         result =cursor.fetchall()
@@ -87,16 +87,41 @@ def retrieve_confrimedcases():
 def retrieve_top_confirmed():
     result = []
     db = sqlite3.connect('covid.db')
-    query = 'SELECT  Sno,ObservationDate,Province,Country,LastUpdate,sum(Confirmed),Deaths,Recovered FROM covidstatus GROUP BY(Country) ORDER BY sum(Confirmed) DESC'
+    query = 'SELECT  Sno,ObservationDate,Province,Country,LastUpdate,sum(Confirmed),Deaths,Recovered FROM covid_19_data GROUP BY(Country) ORDER BY sum(Confirmed) DESC'
     try:
-    cursor = db.execute(query)
-    result = cursor.fetchmany(size=5)
+        cursor = db.execute(query)
+        result = cursor.fetchmany(size=5)
     except IOError:
         tui.error('cannot query data')
     db.close()
     return result
 
-def retrieve_
+def retrieve_top_death():
+    result = []
+    db = sqlite3.connect('covid.db')
+    date = tui.observation_dates()
+    date = str(tuple(date))[0:-2]+')' if str(tuple(date)).endwith(',)') else str(tuple(date))
+    query = "SELECT  Sno,ObservationDate,Province,Country,LastUpdate,Confirmed,sum(Deaths),Recovered FROM covid_19_data WHERE ObservationDate in %s GROUP BY(Country) ORDER BY sum(Deaths) DESC;" %date
+    try:
+        cursor = db.execute(query)
+        result = cursor.fetchmany(size=5)
+    except IOError:
+        tui.error('cannot query data')
+    db.close()
+    return result
+
+def retrieve_summaryby():
+    db = sqlite3.connect('covid.db')
+    query = "SELECT ObservationDate,sum(Confirmed), sum(Deaths), sum(Recovered) FROM covid_19_data where Country = '%s' GROUP BY ObservationDate" %country
+    result = []
+    try:
+        cursor = db.execute(query)
+        result = cursor.fetchall()
+    except IOError:
+        tui.error('cannot query data')
+    db.close()
+    return result
+
 
 
 if __name__ == '__main__':
