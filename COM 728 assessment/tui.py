@@ -67,7 +67,7 @@ def progress(operation, value):
 
     if value == 0:
         print(" has started")
-    elif value > 0 < 100:
+    elif value < 100:
         print(f" is in progress ({value}%) completed")
     else:
         print(" has completed")

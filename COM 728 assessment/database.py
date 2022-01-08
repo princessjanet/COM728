@@ -33,21 +33,45 @@ from dns.resolver import query
 import sqlite3
 import tui
 import process
-def create_table():
-    cursor = db.execute("SELECT name FROM sqlite_master WHERE type='table';")
-    table = [x[0] for x in cursor.fetchall() if v[0] != "sqlite_sequence"]
-    cursor.close()
-    return table
+
+
 def database_setup(records):
     db = sqlite3.connect('covid.db')
-    print(dir(db))
-    val = [tuple (y) for y in records]
     try:
-        sql = "INSERT INTO covid_19_data (Sno,ObservationDate,Province,Country,LastUpdate,Confirmed,Deaths,Recovered) VALUES (?,?,?,?,?,?,?,?);"
+        countries = [x[3] for x in records]
+        add = []
+        drop = lambda x: [add.append(x), x] if x not in add else []
+        c = map(drop, countries)
+        countries = [x[1] for x in c if len(x) == 2]
+        countries = {c: countries.index(c) + 1 for c in countries}
+        sql = "INSERT INTO country (ID,Country) VALUES (?,?);"
+        val = [tuple([list(countries.keys()).index(x) + 1,x]) for x in list(countries.keys())]
         db.executemany(sql,val)
         db.commit()
     except IOError:
         tui.error('cannot create table')
+
+
+    try:
+        address = [[x[2], x[3]] for x in records]
+        address = [(i + 1, x[0], countries[x[1]]) for i, x in enumerate(address)]
+        sql = "INSERT INTO address (ID,Province,Country) VALUES (?,?,?);"
+        db.executemany(sql, val)
+        db.commit()
+
+    except IOError:
+        tui.error('cannot create table')
+
+
+    try:
+        sql = "INSERT INTO covid_19_data (Sno,ObservationDate,Address,Confirmed,Deaths,Recovered) VALUES (?,?,?,?,?,?);"
+        val = [tuple([x[0], x[1], records.index(x) + 1, x[5], x[6], x[7]]) for x in records]
+        db.executemany(sql, val)
+
+    except IOError:
+        tui.error('cannot create table')
+        db.commit()
+        db.close()
 
 def retrieve_country_name_alphabetically():
     countries = []
