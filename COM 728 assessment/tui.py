@@ -185,13 +185,23 @@ def observation_dates():
     :return: a list of observation dates
     """
     try:
-        date =[]
-        observation_dates = int(input("please enter some observation dates:"))
-        for j in range(observation_dates):
-            o =input(f"Date{j+1} format(mm/dd/yy)")
-            date.append(o)
-        return date
+        dates = input("please enter some observation dates in this format:mm/dd/yyyy(eg.10/23/2020)")
+        dates = dates.split(' ')
+        valids = []
+        for date in dates:
+            if len(date.split('/'))!=3:
+                tui.error(f'Invalid date {date}')
+            elif len(date.split('/')[0])!=2:
+                tui.error(f'Invalid date {date} month must be 2 digit')
+            elif len(date.split('/')[1])!=2:
+                tui.error(f'Invalid date {date} day must be 2 digit')
+            elif len(date.split('/')[2])!=4:
+                tui.error(f'Invalid date {date} year must be 4 digit')
+            else:
+                valids.append(date[1:])
+        return valids
     except IOError:
+        print('error')
         return[]
 
 

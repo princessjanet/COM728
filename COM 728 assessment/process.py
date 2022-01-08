@@ -96,7 +96,7 @@ def retrieve_summary(records):
     result = []
     keys = list(temp.keys())
     for i in keys:
-        result.append(temp[k])
+        result.append(temp[i])
     return result
 
 

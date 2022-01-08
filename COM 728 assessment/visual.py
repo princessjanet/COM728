@@ -93,4 +93,47 @@ def animate():
     global x1, x2, x3, y1, y2, y3, confirmed, yb, yc, ax1, ax2, ax3, dates, recovered, deaths
     plt.style.use("seaborn")
     region = input('what country/region?:')
-    date = database.re
+    date = database.retrieve_summaryby(region)
+    confirmed =[int(rec[1]) for rec in data]
+    dates = [int(rec[0].split('/')[1]) for rec in data]
+    deaths = [int(rec[2]) for rec in data]
+    recovered = [int(rec[3]) for rec in data]
+
+    fig= plt.figure(figsize=(5,5))
+    ax1 = fig.add_subplot(1,1,1)
+    x1,y1 = [],[]
+    m= max([10,max(confirmed)])
+    ax1.set_ylim(0,m)
+    ax1.set_xlim(22,31)
+    plt.xlabel("Dates of January")
+    plt.ylabel("No. of confirmed cases")
+    plt.title(f"{region} Animated Report")
+    ani1 = FuncAnimation(fig=fig, func=animate1, interval=500)
+    plt.show()
+
+    fig = plt.figure(figsize=(5, 5))
+    ax2 = fig.add_subplot(1, 1, 1)
+    x2, y2 = [], []
+    m = max([10, max(confirmed)])
+    ax2.set_ylim(0, m)
+    ax2.set_xlim(22, 31)
+    plt.xlabel("Dates of January")
+    plt.ylabel("No. of deaths")
+    plt.title(f"{region} Animated Report")
+    ani2 = FuncAnimation(fig=fig, func=animate2, interval=500)
+    plt.show()
+
+    fig = plt.figure(figsize=(5, 5))
+    ax3 = fig.add_subplot(1, 1, 1)
+    x3, y3 = [], []
+    m = max([10, max(confirmed)])
+    ax3.set_ylim(0, m)
+    ax3.set_xlim(22, 31)
+    plt.xlabel("Dates of January")
+    plt.ylabel("No. of Recoveries")
+    plt.title(f"{region} Animated Report")
+    ani3 = FuncAnimation(fig=fig, func=animate3, interval=500)
+    plt.show()
+
+if __name__ == '__main__':
+    animate()
