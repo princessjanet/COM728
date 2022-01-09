@@ -186,7 +186,7 @@ def run():
             elif selected_option1 == 2:
                 tui.progress('data visualisation operation', 0)
                 visual.bar_chart()
-                tui.progress('data visualisation operation', 100)
+                tui.progress('data visualisati2on operation', 100)
             elif selected_option1 == 3:
                 tui.progress('data visualisation operation',0)
                 visual.animate()
