@@ -48,7 +48,7 @@ def retrieve_records_by_observation_date(records,dates):
     """
         :records: A list of records
         :dates: A list of observation dates
-        :return: list of a certain record for the serial number if it exist else None
+        :return: list of a certain record for the observation date if it exist else None
         """
     exist = []
     for date in dates:

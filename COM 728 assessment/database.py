@@ -33,49 +33,57 @@ from dns.resolver import query
 import sqlite3
 import tui
 import process
+import csv
 
 
 def database_setup(records):
     db = sqlite3.connect('covid.db')
+    cursor = db.cursor()
+    sql = """
+        BEGIN TRANSACTION;
+        CREATE TABLE IF NOT EXISTS"covid_cases"("SNo" INTEGER,
+                        "ObservationDate" TEXT,
+                           "State" TEXT,
+                           "Country" TEXT,
+                           "Last_Update" TEXT,
+                           "Confirmed" INTEGER,
+                           "Deaths" INTEGER,
+                           "Recovered" INTEGER,
+                           PRIMARY KEY("SNo" AUTOINCREMENT)
+                           );
+                        """
+    cursor.executescript(sql)
+    file = open("covid_19_data.csv")
+    records = csv.reader(file)
+    headings = next(records)
     try:
-        countries = [x[3] for x in records]
-        add = []
-        drop = lambda x: [add.append(x), x] if x not in add else []
-        c = map(drop, countries)
-        countries = [x[1] for x in c if len(x) == 2]
-        countries = {c: countries.index(c) + 1 for c in countries}
-        sql = "INSERT INTO country (ID,Country) VALUES (?,?);"
-        val = [tuple([list(countries.keys()).index(x) + 1,x]) for x in list(countries.keys())]
-        db.executemany(sql,val)
-        db.commit()
+        for record in records:
+            insert_records = "INSERT INTO covid_cases (ObservationDate,State,Country,Last_Update,Confirmed,Deaths,Recovered) VALUES(?,?, ?, ?,  ?, ?, ?);"
+            value = [record[1], record[2], record[3], record[4], record[5], record[6], record[7]]
+            cursor.execute(insert_records, value)
+            db.commit()
     except IOError:
-        tui.error('cannot create table')
-
-
+        tui.error('error creating table')
     try:
-        address = [[x[2], x[3]] for x in records]
-        address = [(i + 1, x[0], countries[x[1]]) for i, x in enumerate(address)]
-        sql = "INSERT INTO address (ID,Province,Country) VALUES (?,?,?);"
-        db.executemany(sql, val)
-        db.commit()
-
+        for record in records:
+            insert_records = "INSERT INTO country (SNo,Country) VALUES(?,?);"
+            value = [record[0], record[3]]
+            cursor.execute(insert_records, value)
+            db.commit()
     except IOError:
-        tui.error('cannot create table')
-
-
+        tui.error('error creating table')
     try:
-        sql = "INSERT INTO covid_19_data (Sno,ObservationDate,Address,Confirmed,Deaths,Recovered) VALUES (?,?,?,?,?,?);"
-        val = [tuple([x[0], x[1], records.index(x) + 1, x[5], x[6], x[7]]) for x in records]
-        db.executemany(sql, val)
-
+        for record in records:
+            insert_records = "INSERT INTO country (SNo,Country) VALUES(?,?);"
+            value = [record[0], record[3]]
+            cursor.execute(insert_records, value)
+            db.commit()
     except IOError:
-        tui.error('cannot create table')
-        db.commit()
-        db.close()
+        tui.error('error creating table')
 
 def retrieve_country_name_alphabetically():
     countries = []
-    db = sqlite3.connect('covid19.db')
+    db = sqlite3.connect('covid.db')
     try:
         query = "SELECT Distinct Country FROM covid_19_data"
         cursor = db.execute(query)
@@ -86,7 +94,7 @@ def retrieve_country_name_alphabetically():
     db.close()
     return sorted(countries)
 
-def retrieve_confrimedcases():
+def retrieve_confirmedcases():
     result =[]
     db = sqlite3.connect('covid.db')
     print('[1] By Observation Date\n[2] By Serial Number')
@@ -116,7 +124,7 @@ def retrieve_top_confirmed():
         cursor = db.execute(query)
         result = cursor.fetchmany(size=5)
     except IOError:
-        tui.error('cannot query data')
+        tui.error('cannot top confirmed cases data')
     db.close()
     return result
 
@@ -130,7 +138,7 @@ def retrieve_top_death():
         cursor = db.execute(query)
         result = cursor.fetchmany(size=5)
     except IOError:
-        tui.error('cannot query data')
+        tui.error('cannot retrieve top death data')
     db.close()
     return result
 
@@ -142,7 +150,7 @@ def retrieve_summaryby():
         cursor = db.execute(query)
         result = cursor.fetchall()
     except IOError:
-        tui.error('cannot query data')
+        tui.error('cannot retrieve summary of data')
     db.close()
     return result
 

@@ -52,10 +52,10 @@ def pie_chart():
 
 
 def bar_chart():
-    records= database
+    records = database
     date = records[0][1]
     lbs = [r[3] for r in records]
-    data= [int(r[6]) for r in records]
+    data = [int(r[6]) for r in records]
     fig = plt.figure(figsize=(10,5))
     plt.bar(lbs,data,color = 'purple',
             width = 0.4)
@@ -66,7 +66,7 @@ def bar_chart():
 
 global x1,x2,x3,y1,y2,y3,t1,t2,t3,confirmed,yb,yc,ax1,ax2,ax3,dates
 def animate_confirmedcases(i):
-    global x1,y1confirmed,ax1,dates
+    global x1,y1,confirmed,ax1,dates
     try:
         x1.append(dates[i])
         y1.append(confirmed[i])
