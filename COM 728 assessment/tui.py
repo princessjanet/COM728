@@ -266,15 +266,11 @@ def display_records(records, cols=None):
     :param cols: A list of integer values that represent column indexes
     :return: Does not return anything
     """
-    data = []
-    for i in range(len(records)):
-        if cols:
-            for j in cols:
-                data.append(records[i][j])
-            print (data)
-            data = []
-
+    for record in records:
+        if not cols:
+            print(record)
         else:
-            print(records[i])
+            rec = [record[i] for i in cols]
+            print(rec)
 
 

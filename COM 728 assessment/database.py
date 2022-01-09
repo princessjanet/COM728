@@ -46,8 +46,9 @@ def database_setup(records):
                            "Deaths" INTEGER,
                            "Recovered" INTEGER,
                            "ObservationDate" TEXT,
+                           "countrysno" INTEGER
                            PRIMARY KEY("SNo" AUTOINCREMENT)
-                           );
+                           FOREIGN KEY(countrysno) REFERENCES artist(countries));
                         """
     cursor.executescript(sql)
     file = open("covid_19_data.csv")
@@ -55,16 +56,16 @@ def database_setup(records):
     headings = next(records)
     try:
         for record in records:
-            insert_records = "INSERT INTO cases (SNo, Confirmed,Deaths,Recovered,ObservationDate) VALUES(?,?, ?, ?,?);"
-            value = [record[0],record[5], record[6], record[7],record[1]]
-            cursor.execute(insert_records, value)
+            query = "INSERT INTO cases (SNo, Confirmed,Deaths,Recovered,ObservationDate,countrysno) VALUES(?,?, ?, ?,?,?);"
+            value = [record[0],record[5], record[6], record[7],record[1],record[0]]
+            cursor.execute(query, value)
             db.commit()
     except IOError:
         tui.error('error creating table')
 
     try:
         for record in records:
-            insert_records = "INSERT INTO country (SNo,Country,Province) VALUES(?,?,?);"
+            insert_records = "INSERT INTO countries (SNo,Country,Province) VALUES(?,?,?);"
             value = [record[0], record[3], record[2]]
             cursor.execute(insert_records, value)
             db.commit()
@@ -73,17 +74,18 @@ def database_setup(records):
 
 
 def retrieve_country_name_alphabetically():
-    countries = []
+    country = []
     db = sqlite3.connect('covid.db')
     try:
+        cursor = db.cursor()
         query = "SELECT Distinct Country FROM country"
-        cursor = db.execute(query)
+        cursor.execute(query)
         result = cursor.fetchall()
-        country = [x[1] for x in result]
+        country = [x[0] for x in result]
     except IOError:
         tui.error('error retrieving country name')
     db.close()
-    return sorted(countries)
+    return sorted (country)
 
 def retrieve_confirmedcases():
     result =[]
@@ -125,8 +127,8 @@ def retrieve_top_death():
     db = sqlite3.connect('covid.db')
     date = tui.observation_dates()
     date = str(tuple(date))[0:-2]+')' if str(tuple(date)).endwith(',)') else str(tuple(date))
-    query = "SELECT  Sno,ObservationDate,Province,Country,LastUpdate,Confirmed,sum(Deaths)," \
-            "Recovered FROM covid_19_data WHERE ObservationDate in %s GROUP BY(Country) ORDER BY sum(Deaths) DESC;" %date
+    query = "SELECT  Sno,ObservationDate,Confirmed,sum(Deaths)," \
+            "Recovered FROM cases WHERE ObservationDate in %s GROUP BY(Country) ORDER BY sum(Deaths) DESC;" %date
     try:
         cursor = db.execute(query)
         result = cursor.fetchmany(size=5)
@@ -138,7 +140,7 @@ def retrieve_top_death():
 def retrieve_summaryby():
     db = sqlite3.connect('covid.db')
     query = "SELECT ObservationDate,sum(Confirmed), sum(Deaths), " \
-            "sum(Recovered) FROM covid_19_data where Country = '%s' GROUP BY ObservationDate" %country
+            "sum(Recovered) FROM cases where Country = '%s' GROUP BY ObservationDate" %country
     result = []
     try:
         cursor = db.execute(query)
@@ -151,4 +153,4 @@ def retrieve_summaryby():
 
 
 if __name__ == '__main__':
-    setup([[2, 'dd', 'dd', 'dd', 'dd', 2, 2, 2]])
+    setup()

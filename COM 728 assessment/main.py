@@ -25,30 +25,20 @@ covid_records = []
 
 
 def run():
-    # Task 12: Call the function welcome of the module 'tui'.
-    # This will display our welcome message when the program is executed.
-    # TODO: Your code here
     tui.welcome()
-    # Task 13: Load the data.
-    # - Use the appropriate function in the module 'tui' to display a message to indicate that the data loading
-    # operation has started.
-    # - Load the data. Each line in the file should be a record in the list 'covid_records'.
-    # You should appropriately handle the case where the file cannot be found or loaded.
-    # - Use the appropriate functions in the module 'tui' to display a message to indicate how many records have
-    # been loaded and that the data loading operation has completed.
-    # TODO: Your code here
-    file_path = "covid_19_data.csv"
-    tui.progress("data loading", 0)
+    file = 'covid_19_data.csv'
+    tui.progress('Loading Data', 0)
     try:
-        with open(file_path) as csv_file:
-            csv_reader = csv.reader(csv_file)
-            headings = next(csv_reader)
-            for line in csv_reader:
-                covid_records.append(line)
-    except IOError:
-        tui.error("cannot load file")
-    tui.progress("Data loading operation",100)
+        with open(file, 'r') as f:
+            data = f.readlines()[1:]
+
+            covid_records = [[int(x) if x.isnumeric() else x for x in line.strip().split(',')] for line in data]
+
+    except Exception as e:
+        tui.error(str(e))
+    tui.progress('Loading Data', 100)
     tui.total_records(process.retrieve_total_number_of_records(covid_records))
+
     while True:
         # Task 14: Using the appropriate function in the module 'tui', display a menu of options
         # for the different operations that can be performed on the data (menu variant 0).
@@ -151,7 +141,7 @@ def run():
                 tui.progress('database querying operation',100)
             elif selected_option1 == 3:
                 tui.progress('database querying operation',0)
-                cases = database.retrieve_confrimedcases()
+                cases = database.retrieve_confirmedcases()
                 tui.display_records(cases)
                 tui.progress('database querying operation',100)
             elif selected_option1 == 4:
