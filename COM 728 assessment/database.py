@@ -154,7 +154,7 @@ def retrieve_top_death():
     db.close()
     return result
 
-def retrieve_summaryby():
+def retrieve_summaryby(country):
     db = sqlite3.connect('covid.db')
     query = "SELECT cases.ObservationDate,sum(cases.Confirmed), sum(cases.Deaths), " \
             "sum(cases.Recovered),country.Country FROM cases,country where cases.countrysno==country.SNo and country.Country = '%s' GROUP BY ObservationDate" %country

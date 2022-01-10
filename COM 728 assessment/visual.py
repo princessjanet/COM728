@@ -92,8 +92,8 @@ def animate_recovery(i):
 def animate():
     global x1, x2, x3, y1, y2, y3, confirmed, yb, yc, ax1, ax2, ax3, dates, recovered, deaths
     plt.style.use("seaborn")
-    region = input('what country/region?:')
-    data = database.retrieve_summaryby(region)
+    country = input('what country/region?:')
+    data = database.retrieve_summaryby(country)
     confirmed =[int(rec[1]) for rec in data]
     dates = [int(rec[0].split('/')[1]) for rec in data]
     deaths = [int(rec[2]) for rec in data]
