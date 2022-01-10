@@ -121,14 +121,14 @@ def menu(variant=0):
         return option
     if variant == 2:
         print(""" [1] Setup database
-        \n[2] Retrieve all countries in alphabetical order from the database
-        \n[3] Retrieve confirmed cases, deaths and recoveries for an observation from the database
-        \n[4] Retrieve top 5 countries for confirmed cases from the database from the database
-        \n[5] Retrieve top 5 countries for deaths for specific observation dates form the database""")
+[2] Retrieve all countries in alphabetical order from the database
+[3] Retrieve confirmed cases, deaths and recoveries for an observation from the database
+[4] Retrieve top 5 countries for confirmed cases from the database from the database
+[5] Retrieve top 5 countries for deaths for specific observation dates form the database""")
         option = int(input("Your selection:"))
         return option
     if variant == 3:
-        print(""" [1] Country/Region Pie Chart, \n[2] Observations Chart, \n[3] Animated Summary""")
+        print("""[1] Country/Region Pie Chart, \n[2] Observations Chart, \n[3] Animated Summary""")
         option = int(input("Your selection:"))
         return option
 
@@ -198,7 +198,7 @@ def observation_dates():
             elif len(date.split('/')[2])!=4:
                 tui.error(f'Invalid date {date} year must be 4 digit')
             else:
-                valids.append(date[1:])
+                valids.append(date)
         return valids
     except IOError:
         print('error')

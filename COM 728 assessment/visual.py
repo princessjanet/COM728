@@ -28,8 +28,8 @@ def func(pct,allvalues):
     return"{:.1f}%\n({:d})".format(pct,absolute)
 def pie_chart():
     records=database.retrieve_top_confirmed()
-    lbs =[r[3] for r in records]
-    data = [int(r[5]) for r in records]
+    lbs =[r[5] for r in records]
+    data = [int(r[2]) for r in records]
     explode = (0.1,0.2,0.3,0.4,0.5)
     colors = ("orange", "cyan", "blue",
           "grey", "black")
@@ -52,10 +52,10 @@ def pie_chart():
 
 
 def bar_chart():
-    records = database
+    records = database.retrieve_top_death()
     date = records[0][1]
-    lbs = [r[3] for r in records]
-    data = [int(r[6]) for r in records]
+    lbs = [r[5] for r in records]
+    data = [int(r[3]) for r in records]
     fig = plt.figure(figsize=(10,5))
     plt.bar(lbs,data,color = 'purple',
             width = 0.4)
@@ -93,7 +93,7 @@ def animate():
     global x1, x2, x3, y1, y2, y3, confirmed, yb, yc, ax1, ax2, ax3, dates, recovered, deaths
     plt.style.use("seaborn")
     region = input('what country/region?:')
-    date = database.retrieve_summaryby(region)
+    data = database.retrieve_summaryby(region)
     confirmed =[int(rec[1]) for rec in data]
     dates = [int(rec[0].split('/')[1]) for rec in data]
     deaths = [int(rec[2]) for rec in data]

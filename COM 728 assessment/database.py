@@ -36,41 +36,56 @@ import process
 import csv
 
 
-def database_setup(records):
+def database_setup(records = None):
     db = sqlite3.connect('covid.db')
     cursor = db.cursor()
+    tbl_sql = '''CREATE TABLE IF NOT EXISTS "country" (
+	"SNo"	INTEGER,
+	"Country"	TEXT,
+	"Province"	TEXT,
+	PRIMARY KEY("SNo")
+);'''
     sql = """
         BEGIN TRANSACTION;
-        CREATE TABLE IF NOT EXISTS"cases"("SNo" INTEGER,
+        CREATE TABLE IF NOT EXISTS "cases" ("SNo" INTEGER,
                            "Confirmed" INTEGER,
                            "Deaths" INTEGER,
                            "Recovered" INTEGER,
                            "ObservationDate" TEXT,
-                           "countrysno" INTEGER
-                           PRIMARY KEY("SNo" AUTOINCREMENT)
-                           FOREIGN KEY(countrysno) REFERENCES artist(countries));
+                           "countrysno" INTEGER,
+                           PRIMARY KEY("SNo" )
+                          );
                         """
     cursor.executescript(sql)
+    cursor.executescript(tbl_sql)
+
+
     file = open("covid_19_data.csv")
     records = csv.reader(file)
     headings = next(records)
-    try:
-        for record in records:
-            query = "INSERT INTO cases (SNo, Confirmed,Deaths,Recovered,ObservationDate,countrysno) VALUES(?,?, ?, ?,?,?);"
-            value = [record[0],record[5], record[6], record[7],record[1],record[0]]
+    # populate country data
+    for record in records:
+        query = "INSERT INTO country (SNo, Country,Province) VALUES (?,?,?)"
+        value = [record[0],record[3], record[2]]
+        try:
+            cursor.execute(query, value)
+        except Exception as e:
+            tui.error(f'Inserting data to table country {e}')
+    # populate cases
+    file = open("covid_19_data.csv")
+    records = csv.reader(file)
+    for record in records:
+        query = "INSERT INTO cases (SNo, Confirmed,Deaths,Recovered,ObservationDate,countrysno) VALUES(?,?, ?, ?,?,?);"
+        value = [record[0],record[5], record[6], record[7],record[1],record[0]]
+        try:
             cursor.execute(query, value)
             db.commit()
-    except IOError:
-        tui.error('error creating table')
 
-    try:
-        for record in records:
-            insert_records = "INSERT INTO countries (SNo,Country,Province) VALUES(?,?,?);"
-            value = [record[0], record[3], record[2]]
-            cursor.execute(insert_records, value)
-            db.commit()
-    except IOError:
-        tui.error('error creating table')
+        except Exception as e:
+            tui.error(f'Inserting case data to table cases {e}')
+    db.close()
+    file.close()
+
 
 
 def retrieve_country_name_alphabetically():
@@ -112,8 +127,8 @@ def retrieve_confirmedcases():
 def retrieve_top_confirmed():
     result = []
     db = sqlite3.connect('covid.db')
-    query = 'SELECT  Sno,ObservationDate,sum(Confirmed),Deaths,' \
-            'Recovered FROM cases GROUP BY(Country) ORDER BY sum(Confirmed) DESC'
+    query = 'SELECT  cases.Sno,cases.ObservationDate,sum(cases.Confirmed),cases.Deaths,' \
+            'cases.Recovered, country.Country FROM cases,country WHERE country.SNo == cases.countrysno GROUP BY(country.Country) ORDER BY sum(cases.Confirmed) DESC'
     try:
         cursor = db.execute(query)
         result = cursor.fetchmany(size=5)
@@ -126,21 +141,23 @@ def retrieve_top_death():
     result = []
     db = sqlite3.connect('covid.db')
     date = tui.observation_dates()
-    date = str(tuple(date))[0:-2]+')' if str(tuple(date)).endwith(',)') else str(tuple(date))
-    query = "SELECT  Sno,ObservationDate,Confirmed,sum(Deaths)," \
-            "Recovered FROM cases WHERE ObservationDate in %s GROUP BY(Country) ORDER BY sum(Deaths) DESC;" %date
+    date = str(tuple(date))[0:-2]+')' if str(tuple(date)).endswith(',)') else str(tuple(date))
+    print(date)
+    query = '''SELECT  cases.Sno,cases.ObservationDate,cases.Confirmed,sum(cases.Deaths),
+            cases.Recovered, country.Country FROM cases, 
+            country WHERE cases.countrysno = country.SNo AND cases.ObservationDate in %s  GROUP BY(country.Country) ORDER BY sum(cases.Deaths) DESC;''' %date
     try:
         cursor = db.execute(query)
         result = cursor.fetchmany(size=5)
-    except IOError:
-        tui.error('cannot retrieve top death data')
+    except Exception as e:
+        tui.error(f'cannot retrieve top death data {e}')
     db.close()
     return result
 
 def retrieve_summaryby():
     db = sqlite3.connect('covid.db')
-    query = "SELECT ObservationDate,sum(Confirmed), sum(Deaths), " \
-            "sum(Recovered) FROM cases where Country = '%s' GROUP BY ObservationDate" %country
+    query = "SELECT cases.ObservationDate,sum(cases.Confirmed), sum(cases.Deaths), " \
+            "sum(cases.Recovered),country.Country FROM cases,country where cases.countrysno==country.SNo and country.Country = '%s' GROUP BY ObservationDate" %country
     result = []
     try:
         cursor = db.execute(query)
@@ -153,4 +170,6 @@ def retrieve_summaryby():
 
 
 if __name__ == '__main__':
-    setup()
+    r = retrieve_top_confirmed()
+    for data in r:
+        print(data)
